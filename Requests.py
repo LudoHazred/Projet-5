@@ -1,10 +1,11 @@
 import requests
+import json
 
 payload = {
     'action': 'process',
     'tagtype_0': 'categories',
     'tag_contains_0': 'contains',
-    'tag_0': '', #parametres to choose
+    'tag_0': '', #parameters to choose
     'sort_by': 'unique_scans_n',
     'page_size': 100,
     'countries': 'France',
@@ -14,7 +15,4 @@ payload = {
 
 r = requests.get('https://fr.openfoodfacts.org/cgi/search.pl', params=payload)
 
-r.json
-
-print r.url
-
+r.json()
