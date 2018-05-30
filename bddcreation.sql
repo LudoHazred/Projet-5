@@ -8,8 +8,8 @@ CREATE TABLE Category (
 
 CREATE TABLE History (
                 id_research INT AUTO_INCREMENT NOT NULL,
-                foodStart VARCHAR NOT NULL,
-                substitute VARCHAR NOT NULL,
+                foodStart VARCHAR(1000) NOT NULL,
+                substitute VARCHAR(1000) NOT NULL,
                 PRIMARY KEY (id_research)
 );
 
@@ -19,14 +19,14 @@ CREATE TABLE Substitute (
                 id_research INT NOT NULL,
                 category VARCHAR(200) NOT NULL,
                 subcategory VARCHAR(200),
-                ingredient VARCHAR NOT NULL,
+                ingredient VARCHAR(1000) NOT NULL,
                 nutriscore CHAR(1),
-                label VARCHAR,
-                additive VARCHAR,
+                label VARCHAR(1000),
+                additive VARCHAR(1000),
                 nutrient VARCHAR(1000),
-                store VARCHAR,
+                store VARCHAR(1000),
                 bar_code BIGINT NOT NULL,
-                link VARCHAR,
+                link VARCHAR(1000),
                 PRIMARY KEY (id, id_research)
 );
 
@@ -36,12 +36,12 @@ CREATE TABLE FoodStart (
                 id_research INT NOT NULL,
                 category VARCHAR(200) NOT NULL,
                 subcategory VARCHAR(200),
-                ingredient VARCHAR NOT NULL,
+                ingredient VARCHAR(1000) NOT NULL,
                 nutriscore CHAR(1),
-                additive VARCHAR,
-                label VARCHAR,
+                additive VARCHAR(1000),
+                label VARCHAR(1000),
                 nutrient VARCHAR(1000),
-                store VARCHAR,
+                store VARCHAR(1000),
                 bar_code BIGINT NOT NULL,
                 PRIMARY KEY (id, id_research)
 );
@@ -53,12 +53,12 @@ CREATE TABLE Food (
                 category VARCHAR(200) NOT NULL,
                 subcategory VARCHAR(200),
                 food VARCHAR(400) NOT NULL,
-                ingredient VARCHAR NOT NULL,
-                additive VARCHAR,
+                ingredient VARCHAR(1000) NOT NULL,
+                additive VARCHAR(1000),
                 nutriscore CHAR(1) NOT NULL,
                 nutrient VARCHAR(1000),
-                label VARCHAR,
-                store VARCHAR,
+                label VARCHAR(1000),
+                store VARCHAR(1000),
                 bar_code BIGINT,
                 PRIMARY KEY (id, idCategory)
 );
