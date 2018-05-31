@@ -1,0 +1,8 @@
+category "categories":"Sodas à l'orange",
+nutriscore "nutrition_grade_fr":"e",
+label "labels":"",
+additive "additives_tags":["en:e150d","en:e331","en:e338","en:e950","en:e951"],
+nutrient "nutrient_levels":{"saturated-fat":"low","fat":"low","salt":"low","sugars":"high"}
+store "stores":"",
+bar_code "id":"5000112609653",
+link "url":"https://fr.openfoodfacts.org/produit/5000112609653/original-taste-coca-cola",
