@@ -24,5 +24,13 @@ payload = {
     }
 
 r = requests.get('https://fr.openfoodfacts.org/cgi/search.pl', params=payload)
-data = r.json()
+data_json = r.json()
 adresse = print(r.url)
+
+data = {}
+data['categories'] = []
+data['categories'].append({
+	'name'
+	})
+with open('database.json', 'w') as outfile:  
+    json.dump(data, outfile)
