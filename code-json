@@ -6,3 +6,6 @@ nutrient "nutrient_levels":{"saturated-fat":"low","fat":"low","salt":"low","suga
 store "stores":"",
 bar_code "id":"5000112609653",
 link "url":"https://fr.openfoodfacts.org/produit/5000112609653/original-taste-coca-cola",
+
+link categories : https://fr.openfoodfacts.org/categories&json=1
+"name":"Aliments et boissons à base de végétaux",
