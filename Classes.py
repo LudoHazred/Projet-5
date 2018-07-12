@@ -14,17 +14,23 @@ class OpenFood:
 
         '''connection to the database'''
         self.db = mysql.connector.connect(user='{}'.format(self.db_user), password='{}'.format(self.db_pwd), host='localhost', database='{}'.format(self.db_name))
-        self.cursor = db.cursor()
 
     def get_category(self):
         '''get categories from the URL API'''
         r_cat = requests.get('https://fr.openfoodfacts.org/categories&json=1')
-        cat_json = r_cat.json()
-        add_category = ("INSERT INTO Category" "category" "VALUES (%s)")
-        self.cursor.execute(add_category, cat_json)
-        db.commit()
+        data_json = r_cat.json()
+        data_tags = data_json.get('tags')
+        data_cat = test_cat = [d.get('name', 'None') for d in test]
+        i=2
+        while i < 7:
+            self.cursor = db.cursor()
+            add_category = ("INSERT INTO Category" "(category)" "VALUES('{}')".format(test_cat[i]))
+            self.cursor.execute(add_category)
+            self.db.commit()
+            self.cursor.close()
+            i=i+1
 
-    def get_food(self, categories_selec):
+    def get_food(self, nb_food):
         '''Parameters and request to the URL API'''
         self.payload = {
             'action': 'process',

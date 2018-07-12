@@ -17,21 +17,48 @@ db = mysql.connector.connect(user='pbadmin', password='admin', host='localhost',
 
 '''request for categories'''
 r_cat = requests.get('https://fr.openfoodfacts.org/categories&json=1')
-data_json = r_cat.json()
+with open('C:/Users/Noway/Desktop/Projet-5/data.json') as json_data:
+    data_dict = json.load(json_data)
+data_json = data_dict.json()
 serial_data = json.dumps(data_json)
-add_category = ("INSERT INTO Category" "(category)" "VALUES (%(name)s)")
+add_category = ("INSERT INTO Category" "(category)" "VALUES (%s)")
 cursor = db.cursor()
-cursor.execute("""INSERT INTO Category(category) VALUES(%(category)s)""", data_json)
-cursor.execute(add_category, serial_data)
+cursor.execute("""INSERT INTO Category(category) VALUES(%s)""", data_json)
+cursor.execute(add_category, data_dict.get(tags.name))
 db.commit()
 cursor.close()
 db.close()
 
-'''insert values into the table Category'''
-add_category = ("INSERT INTO Category"
-    "(category)"
-    "VALUES (%s)"
-    )
+test_key = "Value : %s" % data_json.get('count')
+
+[d.get('name', 'None') for d in list]
+
+'''Testé et approuvé'''
+r_cat = requests.get('https://fr.openfoodfacts.org/categories&json=1')
+data_json = r_cat.json()
+test = data_json.get('tags')
+test_cat = [d.get('name', 'None') for d in test]
+i=2
+while i < 7:
+	cursor = db.cursor()
+	add_category = ("INSERT INTO Category" "(category)" "VALUES('{}')".format(test_cat[i]))
+	cursor.execute(add_category)
+	db.commit()
+	cursor.close()
+	i=i+1
+
+'''Test de la suite'''
+cursor = db.cursor(buffered=True)
+nb_category = i - 2
+nb_food = 50
+nb_ini_cat = 1
+
+cursor.execute(selec)
+rows = cursor.fetchall()
+
+while nb_ini_cat < nb_category:
+    nb_ini_cat = str()
+
 
 payload = {
     'action': 'process',
