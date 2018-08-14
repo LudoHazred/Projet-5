@@ -49,37 +49,50 @@ while i < 7:
 
 '''Test de la suite'''
 cursor = db.cursor(buffered=True)
-nb_category = i - 2
+nb_cat = i - 2
 nb_food = 50
 nb_ini_cat = 1
 
-cursor.execute(selec)
-rows = cursor.fetchall()
+cat_nb_1 = str(nb_ini_cat)
 
-while nb_ini_cat < nb_category:
-    nb_ini_cat = str()
-
+selec_cat = ("SELECT category FROM Category WHERE idCategory = "+cat_nb_1)
+cursor.execute(selec_cat)
+cat_saved = str(cursor.fetchone()[0]) #indexation
 
 payload = {
     'action': 'process',
     'tagtype_0': 'categories', #which subject is selected (categories)
     'tag_contains_0': 'contains', #contains or not
-    'tag_0': '{}'.format(categories_selec), #parameters to choose
+    'tag_0': '{}'.format(cat_saved), #parameters to choose
     'sort_by': 'unique_scans_n',
-    'page_size': 50,
+    'page_size': '{}'.format(nb_food),
     'countries': 'France',
     'json': 1,
     'page': 1
     }
 
-r = requests.get('https://fr.openfoodfacts.org/cgi/search.pl', params=payload)
-data_json = r.json()
-adresse = print(r.url)
+r_food = requests.get('https://fr.openfoodfacts.org/cgi/search.pl', params=payload)
+food_json = r_food.json()
+adresse = print(r_food.url)
 
-data = {}
-data['categories'] = []
-data['categories'].append({
-	'name'
-	})
-with open('database.json', 'w') as outfile:  
-    json.dump(data, outfile)
+test2 = food_json.get('products')
+
+test_food_1 = [d.get('product_name_fr') for d in test2]
+test_food_2 = [d.get('ingredients_text_fr') for d in test2]
+test_food_3 = [d.get('nutrition_grade_fr') for d in test2]
+
+
+pouette = 0
+food_id = ("SELECT idCategory FROM Category WHERE idCategory = "+cat_nb_1)
+cursor.execute(food_id)
+food_id_saved = str(cursor.fetchone()[0])
+cat_name = ("SELECT category FROM Category WHERE idCategory = "+cat_nb_1)
+cursor.execute(cat_name)
+category = str(cursor.fetchone()[0])
+
+while pouette < 10:
+    cursor = db.cursor()
+    add_food =(
+    	"INSERT INTO Food"
+    	"(idCategory, category, food, ingredient, nutriscore)"
+    	"VALUES('{}, {}, {}, {}, {},')".format(food_id_saved, cat_saved, test_cat[pouette], test_cat))

@@ -9,3 +9,13 @@ link "url":"https://fr.openfoodfacts.org/produit/5000112609653/original-taste-co
 
 link categories : https://fr.openfoodfacts.org/categories&json=1
 "name":"Aliments et boissons à base de végétaux",
+
+"product_name_fr": food
+"ingredients_text_fr": ingredient
+"additives_tags": additive
+"nutrition_grade_fr": nutriscore
+"nutrient_levels": nutrient
+"nutrient_levels": {"saturated-fat":"low","salt":"low","sugars":"high","fat":"low"}
+"labels_tags": label
+"stores": store
+"id": bar_code
