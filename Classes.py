@@ -20,13 +20,13 @@ class OpenFood:
         self.db = mysql.connector.connect(user='pbadmin', password='admin', host='localhost', database='purbeurre')
 
 
-    def get_category(self, nb_i):
+    def get_category(self):
         '''get categories from the URL API'''
         r_cat = requests.get('https://fr.openfoodfacts.org/categories&json=1')
         data_json = r_cat.json()
         data_tags = data_json.get('tags')
         data_cat = [d.get('name', 'None') for d in data_tags]
-        i= nb_i
+        i = 2
         while i < 7:
             self.cursor = self.db.cursor()
             add_category = ("INSERT INTO Category" "(category)" "VALUES('{}')".format(data_cat[i]))
@@ -70,8 +70,9 @@ class OpenFood:
                 prod_name = str(prod_name_saved[x])
                 ingrdts_saved = [d.get('ingredients_text_fr') for d in test2]
                 ingrdts = str(ingrdts_saved[x])
-                ingredts = unidecode.unidecode(ingrdts)
-                ingredtss = ingredts.replace("'", "")
+                '''ingredts = unidecode.unidecode(ingrdts)'''
+                '''ingredts2 = ingredts.replace("'", "")'''
+                '''ingredts3 = ingredts.replace("*", "")'''
                 nutri_grd_saved = [d.get('nutrition_grade_fr') for d in test2]
                 nutri_grd = str(nutri_grd_saved[x])
                 bar_code_saved = [d.get('id') for d in test2]
@@ -79,7 +80,7 @@ class OpenFood:
                 add_food =(
                     "INSERT INTO Food"
                     "(idCategory, category, food, ingredient, nutriscore, bar_code)"
-                    "VALUES ('{}', '{}', '{}', '{}', '{}', {})".format(food_id_saved, cat_saved, prod_name, ingredtss, nutri_grd, bar_code))
+                    "VALUES ({}, '{}', '{}', '{}', '{}', {})".format(food_id_saved, cat_saved, prod_name, ingrdts, nutri_grd, bar_code))
                 cursor.execute(add_food)
                 self.db.commit()
             cursor.close()
