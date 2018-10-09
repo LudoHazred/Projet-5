@@ -66,21 +66,22 @@ class OpenFood:
     
             for x in range(nb_food) :
 
-                prod_name_saved = [d.get('product_name_fr') for d in test2]
+                prod_name_saved = [d.get('product_name_fr') for d in test2] #get product name in french
                 prod_name = str(prod_name_saved[x])
-                ingrdts_saved = [d.get('ingredients_text_fr') for d in test2]
+                ingrdts_saved = [d.get('ingredients_text_fr') for d in test2] #get ingredients list in french
                 ingrdts = str(ingrdts_saved[x])
                 '''ingredts = unidecode.unidecode(ingrdts)'''
                 '''ingredts2 = ingredts.replace("'", "")'''
                 '''ingredts3 = ingredts.replace("*", "")'''
-                nutri_grd_saved = [d.get('nutrition_grade_fr') for d in test2]
+                nutri_grd_saved = [d.get('nutrition_grade_fr') for d in test2] #get nutrigrade
                 nutri_grd = str(nutri_grd_saved[x])
-                bar_code_saved = [d.get('id') for d in test2]
+                bar_code_saved = [d.get('id') for d in test2] #get barcode
                 bar_code = bar_code_saved[x]
                 add_food =(
                     "INSERT INTO Food"
                     "(idCategory, category, food, ingredient, nutriscore, bar_code)"
-                    "VALUES ({}, '{}', '{}', '{}', '{}', {})".format(food_id_saved, cat_saved, prod_name, ingrdts, nutri_grd, bar_code))
-                cursor.execute(add_food)
+                    "VALUES (%s, %s, %s, %s, %s, %s)")
+                data = (food_id_saved, cat_saved, prod_name, ingrdts, nutri_grd, bar_code)
+                cursor.execute(add_food, data)
                 self.db.commit()
             cursor.close()
