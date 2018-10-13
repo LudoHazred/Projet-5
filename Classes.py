@@ -27,7 +27,7 @@ class OpenFood:
         data_tags = data_json.get('tags')
         data_cat = [d.get('name', 'None') for d in data_tags]
         i = 2
-        while i < 7:
+        while i < 12:
             self.cursor = self.db.cursor()
             add_category = ("INSERT INTO Category" "(category)" "VALUES('{}')".format(data_cat[i]))
             self.cursor.execute(add_category)
