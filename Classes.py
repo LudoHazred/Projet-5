@@ -3,16 +3,6 @@ import unidecode
 import mysql.connector
 from constant import *
 
-class OpenFood:
-
-    def __init__(self):
-        '''Initialization username, password, database name and categories'''
-        self.db_name = DB_NAME
-        self.db_pwd = DB_PWD
-        self.db_user = DB_USER
-
-        '''connection to the database'''
-        self.db = mysql.connector.connect(user='{}'.format(self.db_user), password='{}'.format(self.db_pwd), host='localhost', database='{}'.format(self.db_name))
 
 class OpenFood:
 
@@ -85,3 +75,77 @@ class OpenFood:
                 cursor.execute(add_food, data)
                 self.db.commit()
             cursor.close()
+
+class DBRel:
+
+    def __init__(self, name, pwd, user, host):
+		self.name = name
+		self.pwd = pwd
+		self.user = user
+		self.host = host
+		self.con = mysql.connector.connect(user=user, password=pwd, host=host, database=name)
+
+    def clear(self):
+    	self.cursor.execute("""DROP TABLE Category, Food, Substitute""")
+
+    def create_db(self):
+    	self.cursor.execute("""
+    		CREATE TABLE Category (
+            idCategory INT AUTO_INCREMENT NOT NULL,
+            category VARCHAR(1000) NOT NULL,
+            PRIMARY KEY (idCategory)
+            );
+            """)
+    	return print("Cleared")
+
+    	self.cursor.execute("""
+            CREATE TABLE Substitute (
+            id INT AUTO_INCREMENT NOT NULL,
+            idCategory INT NOT NULL,
+            category VARCHAR(200) NOT NULL,
+            subcategory VARCHAR(200),
+            ingredient VARCHAR(5000),
+            nutriscore CHAR(10),
+            label VARCHAR(1000),
+            additive VARCHAR(1000),
+            nutrient VARCHAR(1000),
+            store VARCHAR(1000),
+            bar_code BIGINT,
+            link VARCHAR(1000),
+            PRIMARY KEY (id, idCategory)
+            );
+            """)
+
+    	self.cursor.execute("""
+            CREATE TABLE Food (
+            id INT AUTO_INCREMENT NOT NULL,
+            idCategory INT NOT NULL,
+            category VARCHAR(200) NOT NULL,
+            food VARCHAR(400) NOT NULL,
+            ingredient VARCHAR(5000),
+            additive VARCHAR(1000),
+            nutriscore CHAR(10),
+            nutrient VARCHAR(1000),
+            label VARCHAR(1000),
+            store VARCHAR(1000),
+            bar_code BIGINT,
+            PRIMARY KEY (id, idCategory)
+            );
+            """)
+
+    	self.cursor.execute("""
+            ALTER TABLE Food ADD CONSTRAINT category_food_fk
+            FOREIGN KEY (idCategory)
+            REFERENCES Category (idCategory)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
+            """)
+
+    	self.cursor.execute("""
+            ALTER TABLE Substitute ADD CONSTRAINT category_substitute_fk
+            FOREIGN KEY (idCategory)
+            REFERENCES Category (idCategory)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
+            """)
+    	return print("Bases crées")
